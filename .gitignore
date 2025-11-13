@@ -1,0 +1,6 @@
+.DS_Store
+.vscode
+*.o
+ex00/tester
+ex00/data.csv
+ex01/tester
