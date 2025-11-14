@@ -12,13 +12,20 @@
 
 #include "main.hpp"
 
-int main(void) {
+int main(int argc, char** argv) {
+	if (argc != 2)
+	{
+		std::cout << "Error: Single file argument needed.";
+		return 1;
+	}
+		//Abrir archivo si se deja
 	std::cout << std::endl;
 	std::cout << TSTH << "===========================" << TSTR;
 	std::cout << TSTH << "|    Test from subject    |" << TSTR;
 	std::cout << TSTH << "===========================" << TSTR;
 	{
-
+		//parsear csv y txt en sendos map <string, double>
+		//hacer función para comprobar correcto formato de fecha y de línea tanto en csv como en txt
 	}
 	return (0);
 }
