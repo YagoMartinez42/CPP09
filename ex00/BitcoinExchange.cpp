@@ -32,14 +32,30 @@ int BitcoinExchange::loadFiles(char* dataSetFile, char* evalSetFile)
 
 void BitcoinExchange::mapData()
 {
-    // Implementation for mapping data
-    /*while (std::getline (csvData, myStr))
-	{
+    std::string line;
+    int         lineError;
 
-	}*/
+    while (std::getline (this->_csvDataFile, line))
+	{
+        lineError = this->validateLine(line);
+        switch (lineError)
+        {
+            case 0:
+                break;
+            case 1:
+                std::cout << "Sintax error in line: " << line << "\n";
+                break;
+            case 2:
+                std::cout << "Error. Value is not a positive number: " << line << "\n";
+                break;
+            case 3:
+                std::cout << "Error. Value too large: " << line << "\n";
+                break;
+        }
+	}
 }
 
-void BitcoinExchange::validateLine(std::string line)
+int BitcoinExchange::validateLine(std::string line)
 {
     // Implementation for validating a line
 }

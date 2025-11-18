@@ -27,7 +27,7 @@ class BitcoinExchange
 		~BitcoinExchange();
 		int		loadFiles(char* dataSetFile, char* evalSetFile);
 		void	mapData();
-		void	validateLine(std::string line);
+		int	validateLine(std::string line);
 		void	closeFiles();
 	private:
 		BitcoinExchange(BitcoinExchange& orig);
