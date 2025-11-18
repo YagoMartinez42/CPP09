@@ -6,7 +6,7 @@
 /*   By: samartin <samartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 13:53:06 by samartin          #+#    #+#             */
-/*   Updated: 2025/09/12 14:25:03 by samartin         ###   ########.fr       */
+/*   Updated: 2025/11/18 11:48:58 by samartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@
 # ifndef TSTR
 #  define TSTR "\e[00m\n"
 # endif
+# ifndef CSV
+#  define CSV "data.csv"
+# endif
 
 #include <iostream>
-#include <fstream>
 
 #endif

@@ -6,17 +6,16 @@
 /*   By: samartin <samartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:54:58 by samartin          #+#    #+#             */
-/*   Updated: 2025/11/13 15:18:02 by samartin         ###   ########.fr       */
+/*   Updated: 2025/11/18 11:52:33 by samartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.hpp"
+#include "BitcoinExchange.hpp"
 
 int main(int argc, char** argv)
 {
-	std::string		myText;
-	std::ifstream	csvData;
-	std::ifstream	argTxtFile;
+	BitcoinExchange btc;
 
 	if (argc != 2)
 	{
@@ -25,20 +24,8 @@ int main(int argc, char** argv)
 	}
 	else
 	{
-		try
-		{
-			csvData.open("data.csv");
-			argTxtFile.open(argv[1]);
-		}
-		catch(const std::exception& e)
-		{
-			std::cerr << e.what() << '\n';
+		if (btc.loadFiles(CSV, argv[1]));
 			return (1);
-		}
-	}
-	while (std::getline (csvData, myText))
-	{
-
 	}
 
 	std::cout << std::endl;
