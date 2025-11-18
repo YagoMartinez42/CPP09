@@ -12,20 +12,43 @@
 
 #include "main.hpp"
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
+	std::string		myText;
+	std::ifstream	csvData;
+	std::ifstream	argTxtFile;
+
 	if (argc != 2)
 	{
 		std::cout << "Error: Single file argument needed.";
-		return 1;
+		return (1);
 	}
-		//Abrir archivo si se deja
+	else
+	{
+		try
+		{
+			csvData.open("data.csv");
+			argTxtFile.open(argv[1]);
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+			return (1);
+		}
+	}
+	while (std::getline (csvData, myText))
+	{
+
+	}
+
 	std::cout << std::endl;
 	std::cout << TSTH << "===========================" << TSTR;
 	std::cout << TSTH << "|    Test from subject    |" << TSTR;
 	std::cout << TSTH << "===========================" << TSTR;
 	{
-		//parsear csv y txt en sendos map <string, double>
-		//hacer función para comprobar correcto formato de fecha y de línea tanto en csv como en txt
+		
+			
+
 	}
 	return (0);
 }
