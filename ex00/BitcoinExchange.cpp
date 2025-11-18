@@ -6,7 +6,7 @@
 /*   By: samartin <samartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 12:42:30 by samartin          #+#    #+#             */
-/*   Updated: 2025/11/18 11:52:30 by samartin         ###   ########.fr       */
+/*   Updated: 2025/11/18 11:57:07 by samartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int BitcoinExchange::loadFiles(char* dataSetFile, char* evalSetFile)
     }
     catch(const std::exception& e)
     {
-        std::cerr << e.what() << '\n';
+        std::cerr << e.what() << std::endl;
         return (1);
     }
     return (0);
