@@ -19,6 +19,8 @@
 # include <iostream>
 # include <fstream>
 # include <map>
+# include <sstream>
+# include <cctype>
 
 class BitcoinExchange
 {
@@ -27,7 +29,8 @@ class BitcoinExchange
 		~BitcoinExchange();
 		int		loadFiles(char* dataSetFile, char* evalSetFile);
 		void	mapData();
-		int	validateLine(std::string line);
+		int		validateCsvLine(std::string line);
+		int		validateInputLine(std::string line);
 		void	closeFiles();
 	private:
 		BitcoinExchange(BitcoinExchange& orig);

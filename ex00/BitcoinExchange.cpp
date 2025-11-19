@@ -35,9 +35,12 @@ void BitcoinExchange::mapData()
     std::string line;
     int         lineError;
 
-    while (std::getline (this->_csvDataFile, line))
+    std::getline(this->_csvDataFile, line); //Skip header
+    while (std::getline(this->_csvDataFile, line))
 	{
-        lineError = this->validateLine(line);
+        if (line == "\n" || line == "\r\n")
+            continue;
+        lineError = this->validateCsvLine(line);
         switch (lineError)
         {
             case 0:
@@ -46,16 +49,60 @@ void BitcoinExchange::mapData()
                 std::cout << "Sintax error in line: " << line << "\n";
                 break;
             case 2:
-                std::cout << "Error. Value is not a positive number: " << line << "\n";
+                std::cout << "Error. Value too large: " << line << "\n";
                 break;
             case 3:
+                std::cout << "Error. Value is not a positive number: " << line << "\n";
+                break;
+        }
+	}
+    std::getline(this->_argTxtFile, line); //Skip header
+    while (std::getline(this->_argTxtFile, line))
+	{
+        if (line == "\n" || line == "\r\n")
+            continue;
+        lineError = this->validateInputLine(line);
+        switch (lineError)
+        {
+            case 0:
+                break;
+            case 1:
+                std::cout << "Sintax error in line: " << line << "\n";
+                break;
+            case 2:
                 std::cout << "Error. Value too large: " << line << "\n";
+                break;
+            case 3:
+                std::cout << "Error. Value is not a positive number: " << line << "\n";
                 break;
         }
 	}
 }
 
-int BitcoinExchange::validateLine(std::string line)
+int BitcoinExchange::validateCsvLine(std::string line)
 {
-    // Implementation for validating a line
+    std::string         patron = "0000-00-00,0";
+    std::istringstream  iss;
+    double              d;
+
+    for (int i = 0; i < line.length() && i < patron.length(); i++)
+    {
+        if (patron[i] != '0')
+            if (patron[i] != line[i])
+                return (1);
+        else if (!std::isdigit(line[i]))
+                return (1);
+    }
+    iss = std::istringstream(line.substr(11, -1));
+    if (iss >> d && iss.eof() && d <= INT32_MAX)
+        return (0);
+    else if (iss >> d && d > INT32_MAX)
+        return (2);
+    else
+        return (3);
+}
+
+int BitcoinExchange::validateInputLine(std::string line)
+{
+
 }
