@@ -1,6 +1,5 @@
 .DS_Store
 .vscode
 *.o
-ex00/tester
+ex00/btc
 ex00/data.csv
-ex01/tester

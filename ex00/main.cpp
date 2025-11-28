@@ -13,6 +13,7 @@
 #include "main.hpp"
 #include "BitcoinExchange.hpp"
 
+
 int main(int argc, char** argv)
 {
 	BitcoinExchange btc;
@@ -22,19 +23,17 @@ int main(int argc, char** argv)
 		std::cout << "Error: Single file argument needed.";
 		return (1);
 	}
-	else
-	{
-		if (btc.loadFiles(CSV, argv[1]));
+	else if (btc.loadFiles(CSV, argv[1]))
 			return (1);
-	}
+	btc.mapData();
+	std::cout << "\n" << std::endl;
+	btc.showData();
 
 	std::cout << std::endl;
 	std::cout << TSTH << "===========================" << TSTR;
 	std::cout << TSTH << "|    Test from subject    |" << TSTR;
 	std::cout << TSTH << "===========================" << TSTR;
 	{
-		
-			
 
 	}
 	return (0);

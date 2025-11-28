@@ -14,27 +14,27 @@
 //hacer función para comprobar correcto formato de fecha y de línea tanto en csv como en txt
 //trasladar la carga de archivos también a la clase
 
-#ifndef SPAN_HPP
-# define SPAN_HPP
+#ifndef BITCOINEXCHANGE_HPP
+# define BITCOINEXCHANGE_HPP
 # include <iostream>
 # include <fstream>
-# include <map>
 # include <sstream>
-# include <cctype>
+# include <map>
+# include <ctime>
 
 class BitcoinExchange
 {
 	public:
 		BitcoinExchange();
 		~BitcoinExchange();
-		int		loadFiles(char* dataSetFile, char* evalSetFile);
+		int		loadFiles(const char* dataSetFile, const char* evalSetFile);
 		void	mapData();
-		int		validateCsvLine(std::string line);
-		int		validateInputLine(std::string line);
-		void	closeFiles();
+		void	showData();
 	private:
 		BitcoinExchange(BitcoinExchange& orig);
 		BitcoinExchange&	operator=(const BitcoinExchange& orig);
+		bool				validateLine(const std::string line, const std::string pattern, bool smode) const;
+		void				closeFiles();
 		std::ifstream					_csvDataFile;
 		std::ifstream					_argTxtFile;
 		std::map<std::string, double>	_dataSet;
