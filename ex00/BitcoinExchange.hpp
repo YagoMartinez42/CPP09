@@ -6,7 +6,7 @@
 /*   By: samartin <samartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 12:42:34 by samartin          #+#    #+#             */
-/*   Updated: 2025/11/18 11:54:22 by samartin         ###   ########.fr       */
+/*   Updated: 2025/12/05 13:00:18 by samartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ class BitcoinExchange
 	private:
 		BitcoinExchange(BitcoinExchange& orig);
 		BitcoinExchange&	operator=(const BitcoinExchange& orig);
-		bool				validateLine(const std::string line, const std::string pattern, bool smode) const;
+		bool				validateLine(const std::string line, const std::string pattern) const;
 		bool				validateDate(const std::string line) const;
 		void				closeFiles();
 		std::ifstream					_csvDataFile;

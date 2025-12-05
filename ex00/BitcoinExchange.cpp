@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samartin <samartin@student.42.fr>          #+#  +:+       +#+        */
+/*   By: samartin <samartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-11-21 14:09:27 by samartin          #+#    #+#             */
-/*   Updated: 2025-11-21 14:09:27 by samartin         ###   ########.fr       */
+/*   Created: 2025/11/21 14:09:27 by samartin          #+#    #+#             */
+/*   Updated: 2025/12/05 13:39:33 by samartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int BitcoinExchange::loadFiles(const char* dataSetFile, const char* evalSetFile)
 {
 	try
 	{
-		this->_csvDataFile.open(dataSetFile);
-		this->_argTxtFile.open(evalSetFile);
+		this->_csvDataFile.open(dataSetFile, std::ifstream::out);
+		this->_argTxtFile.open(evalSetFile, std::ifstream::out);
 	}
 	catch(const std::exception& e)
 	{
@@ -45,7 +45,7 @@ void BitcoinExchange::mapData()
 	{
 		if (line == "\n" || line == "\r\n")
 			continue;
-		if (this->validateLine(line, "0000-00-00,", true))
+		if (this->validateLine(line, "0000-00-00,"))
 		{
 			iss.clear();
 			iss.str(line.substr(11));
@@ -68,18 +68,25 @@ void BitcoinExchange::execute()
 	{
 		if (line == "\n" || line == "\r\n")
 			continue;
-		if (this->validateLine(line, "0000-00-00 | ", false))
+		if (this->validateLine(line, "0000-00-00 | "))
 		{
 			date = line.substr(0,10);
 			iss.clear();
 			iss.str(line.substr(13));
 			iss >> d;
 			if (this->_dataSet.find(date) != this->_dataSet.end())
-				std::cout << date << " => " << this->_dataSet[date] * d << "\n";
+				std::cout << date << " => " << d << " = " << this->_dataSet[date] * d << "\n";
 			else
+            {
 				it = this->_dataSet.upper_bound(date);
-				//
-				//
+                if (it != this->_dataSet.begin())
+                {
+                    it--;
+                    std::cout << date << " => " << d << " = " << it->second * d << "\n";
+                }
+                else
+                    std::cout << "Error: No available data for date " << date << "\n";
+            }
 		}
 	}
 	std::cout << std::endl;
@@ -96,7 +103,7 @@ void BitcoinExchange::showData() const
 	aFile.close();
 }
 
-bool BitcoinExchange::validateLine(const std::string line, const std::string pattern, const bool smode) const
+bool BitcoinExchange::validateLine(const std::string line, const std::string pattern) const
 {
 	std::istringstream	iss;
 	double				d;
@@ -135,12 +142,12 @@ bool BitcoinExchange::validateLine(const std::string line, const std::string pat
 		std::cerr << "Error. Value too large: " << line << "\n";
 		return (false);
 	}
-	else if (smode && d < 0)
+	else if (d < 0)
 	{
 		std::cerr << "Error. Value is not a positive number: " << line << "\n";
 		return (false);
 	}
-	else if (iss.eof() && !((d < 0) * smode) && d <= 2147483647) //INT32 Max
+	else if (iss.eof() && d <= 2147483647) //INT32 Max
 		return (true);
 	else
 		std::cerr << "Unhandled Error: " << line << "\n";

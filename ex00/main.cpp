@@ -6,7 +6,7 @@
 /*   By: samartin <samartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:54:58 by samartin          #+#    #+#             */
-/*   Updated: 2025/11/18 11:52:33 by samartin         ###   ########.fr       */
+/*   Updated: 2025/12/05 13:35:09 by samartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,15 @@ int main(int argc, char** argv)
 
 	if (argc != 2)
 	{
-		std::cout << "Error: Single file argument needed.";
+		std::cerr << "Error: Single file argument needed." << std::endl;
 		return (1);
 	}
 	else if (btc.loadFiles(CSV, argv[1]))
-			return (1);
-	btc.mapData();
-	std::cout << "\n" << std::endl;
-	btc.execute();
-
-	std::cout << std::endl;
-	std::cout << TSTH << "===========================" << TSTR;
-	std::cout << TSTH << "|    Test from subject    |" << TSTR;
-	std::cout << TSTH << "===========================" << TSTR;
 	{
-
+		std::cerr << "Could not open file." << std::endl;
+		return (1);
 	}
+	btc.mapData();
+	btc.execute();
 	return (0);
 }
