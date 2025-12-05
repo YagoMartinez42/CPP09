@@ -27,7 +27,7 @@ int main(int argc, char** argv)
 			return (1);
 	btc.mapData();
 	std::cout << "\n" << std::endl;
-	btc.showData();
+	btc.execute();
 
 	std::cout << std::endl;
 	std::cout << TSTH << "===========================" << TSTR;

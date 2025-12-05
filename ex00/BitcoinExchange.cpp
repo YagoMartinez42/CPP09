@@ -53,7 +53,16 @@ void BitcoinExchange::mapData()
 			this->_dataSet[line.substr(0,10)] = d;
 		}
 	}
-std::cout << std::endl;
+}
+
+void BitcoinExchange::execute()
+{
+	std::string								line;
+	std::string								date;
+	std::istringstream						iss;
+	std::map<std::string, double>::iterator it;
+	double									d;
+
 	std::getline(this->_argTxtFile, line); //Skip header
 	while (std::getline(this->_argTxtFile, line))
 	{
@@ -61,29 +70,35 @@ std::cout << std::endl;
 			continue;
 		if (this->validateLine(line, "0000-00-00 | ", false))
 		{
+			date = line.substr(0,10);
 			iss.clear();
 			iss.str(line.substr(13));
 			iss >> d;
-			this->_evalSet[line.substr(0,10)] = d;
+			if (this->_dataSet.find(date) != this->_dataSet.end())
+				std::cout << date << " => " << this->_dataSet[date] * d << "\n";
+			else
+				it = this->_dataSet.upper_bound(date);
+				//
+				//
 		}
 	}
-std::cout << std::endl;
+	std::cout << std::endl;
 }
 
-void BitcoinExchange::showData()
+void BitcoinExchange::showData() const
 {
 	std::ofstream aFile;
 
-	for(std::map<std::string, double>::iterator it = this->_dataSet.begin(); it != this->_dataSet.end(); it++)
-		std::cout << (*it).first << " / " << (*it).second << "\n";
-	std::cout << std::endl;
+	aFile.open("out.txt");
+	for(std::map<std::string, double>::const_iterator it = this->_dataSet.begin(); it != this->_dataSet.end(); it++)
+		aFile << (*it).first << " / " << (*it).second << "\n";
+	aFile << std::endl;
+	aFile.close();
 }
 
 bool BitcoinExchange::validateLine(const std::string line, const std::string pattern, const bool smode) const
 {
 	std::istringstream	iss;
-	struct tm			dumpDate;
-	char*				strPntr;
 	double				d;
 	size_t			 	i;
 
@@ -103,26 +118,54 @@ bool BitcoinExchange::validateLine(const std::string line, const std::string pat
 			return (false);
 		}
 	}
-	strPntr = strptime(line.substr(10).c_str(), "%Y-%m-%d", &dumpDate);
-	if (strPntr && *strPntr != '\0')
+	if (!this->validateDate(line.substr(0,10)))
 	{
 		std::cerr << "Error. Not a valid date: " << line << "\n";
 		return (false);
 	}
+	iss.clear();
 	iss.str(line.substr(i));
-	if (iss >> d && iss.eof() && !((d < 0) * smode) && d <= 2147483647) //INT32 Max
-		return (true);
-	else if (iss >> d && d > 2147483647)
+	if (!(iss >> d))
+	{
+		std::cerr << "Error. Not a numeric value: " << line << "\n";
+		return (false);
+	}
+	if (d > 2147483647)
 	{
 		std::cerr << "Error. Value too large: " << line << "\n";
 		return (false);
 	}
-	else if (smode && iss >> d && d < 0)
+	else if (smode && d < 0)
 	{
 		std::cerr << "Error. Value is not a positive number: " << line << "\n";
 		return (false);
 	}
+	else if (iss.eof() && !((d < 0) * smode) && d <= 2147483647) //INT32 Max
+		return (true);
 	else
 		std::cerr << "Unhandled Error: " << line << "\n";
-	return (0);
+	return (false);
+}
+
+bool BitcoinExchange::validateDate(std::string date) const
+{
+	std::istringstream	iss;
+	int					ymd;
+
+	iss.clear();
+	iss.str(date.substr(0, 4));
+	iss >> ymd;
+	if (ymd < 1900 || ymd > 3000)
+		return (false);
+	iss.clear();
+	iss.str(date.substr(5, 2));
+	iss >> ymd;
+	if (ymd < 1 || ymd > 12)
+		return (false);
+	iss.clear();
+	iss.str(date.substr(8, 2));
+	iss >> ymd;
+	if (ymd < 1 || ymd > 31)
+		return (false);
+	return (true);
 }

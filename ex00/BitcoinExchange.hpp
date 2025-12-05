@@ -20,7 +20,6 @@
 # include <fstream>
 # include <sstream>
 # include <map>
-# include <ctime>
 
 class BitcoinExchange
 {
@@ -29,15 +28,16 @@ class BitcoinExchange
 		~BitcoinExchange();
 		int		loadFiles(const char* dataSetFile, const char* evalSetFile);
 		void	mapData();
-		void	showData();
+		void	execute();
+		void	showData() const;
 	private:
 		BitcoinExchange(BitcoinExchange& orig);
 		BitcoinExchange&	operator=(const BitcoinExchange& orig);
 		bool				validateLine(const std::string line, const std::string pattern, bool smode) const;
+		bool				validateDate(const std::string line) const;
 		void				closeFiles();
 		std::ifstream					_csvDataFile;
 		std::ifstream					_argTxtFile;
 		std::map<std::string, double>	_dataSet;
-		std::map<std::string, double>	_evalSet;
 };
 #endif
