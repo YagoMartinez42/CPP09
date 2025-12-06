@@ -6,13 +6,9 @@
 /*   By: samartin <samartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 12:42:34 by samartin          #+#    #+#             */
-/*   Updated: 2025/12/05 13:00:18 by samartin         ###   ########.fr       */
+/*   Updated: 2025/12/05 14:04:09 by samartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-//parsear csv y txt en sendos map <string, double>
-//hacer función para comprobar correcto formato de fecha y de línea tanto en csv como en txt
-//trasladar la carga de archivos también a la clase
 
 #ifndef BITCOINEXCHANGE_HPP
 # define BITCOINEXCHANGE_HPP

@@ -6,7 +6,7 @@
 /*   By: samartin <samartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 14:09:27 by samartin          #+#    #+#             */
-/*   Updated: 2025/12/05 13:39:33 by samartin         ###   ########.fr       */
+/*   Updated: 2025/12/06 16:23:33 by samartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,10 @@ BitcoinExchange::~BitcoinExchange()
 
 int BitcoinExchange::loadFiles(const char* dataSetFile, const char* evalSetFile)
 {
-	try
-	{
-		this->_csvDataFile.open(dataSetFile, std::ifstream::out);
-		this->_argTxtFile.open(evalSetFile, std::ifstream::out);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << std::endl;
+	this->_csvDataFile.open(dataSetFile, std::ifstream::out);
+	this->_argTxtFile.open(evalSetFile, std::ifstream::out);
+	if (!this->_csvDataFile.is_open() || !this->_argTxtFile.is_open())
 		return (1);
-	}
 	return (0);
 }
 

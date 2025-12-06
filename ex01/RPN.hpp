@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   RPN.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: samartin <samartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/12 13:54:58 by samartin          #+#    #+#             */
-/*   Updated: 2025/12/06 16:26:26 by samartin         ###   ########.fr       */
+/*   Created: 2025/12/05 14:02:14 by samartin          #+#    #+#             */
+/*   Updated: 2025/12/06 12:05:20 by samartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.hpp"
-#include "BitcoinExchange.hpp"
+#ifndef RPN_HPP
+# define RPN_HPP
+# include <iostream>
+# include <fstream>
+# include <sstream>
+# include <map>
 
-int main(int argc, char** argv)
+class RPN
 {
-	BitcoinExchange btc;
+	public:
+        RPN();
+        RPN(RPN& orig);
+        RPN&	operator=(const RPN& orig);
+        ~RPN();
+    private:
 
-	if (argc != 2)
-	{
-		std::cerr << "Error: Single file argument needed." << std::endl;
-		return (1);
-	}
-	else if (btc.loadFiles(CSV, argv[1]))
-	{
-		std::cerr << "Error: Could not open file." << std::endl;
-		return (1);
-	}
-	btc.mapData();
-	btc.execute();
-	return (0);
-}
+};
+#endif

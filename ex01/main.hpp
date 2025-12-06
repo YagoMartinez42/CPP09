@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   main.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: samartin <samartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/12 13:54:58 by samartin          #+#    #+#             */
-/*   Updated: 2025/12/06 16:26:26 by samartin         ###   ########.fr       */
+/*   Created: 2025/12/05 13:43:06 by samartin          #+#    #+#             */
+/*   Updated: 2025/12/05 14:01:43 by samartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.hpp"
-#include "BitcoinExchange.hpp"
+#ifndef MAIN_HPP
+# define MAIN_HPP
 
-int main(int argc, char** argv)
-{
-	BitcoinExchange btc;
+# ifndef TSTL
+#  define TSTL "\e[32m"
+# endif
+# ifndef TSTH
+#  define TSTH "\e[33m\e[44m"
+# endif
+# ifndef TSTR
+#  define TSTR "\e[00m\n"
+# endif
+# ifndef CSV
+#  define CSV "data.csv"
+# endif
 
-	if (argc != 2)
-	{
-		std::cerr << "Error: Single file argument needed." << std::endl;
-		return (1);
-	}
-	else if (btc.loadFiles(CSV, argv[1]))
-	{
-		std::cerr << "Error: Could not open file." << std::endl;
-		return (1);
-	}
-	btc.mapData();
-	btc.execute();
-	return (0);
-}
+#include <iostream>
+
+#endif
