@@ -10,25 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.hpp"
-#include "BitcoinExchange.hpp"
+#include "RPN.hpp"
 
 
 int main(int argc, char** argv)
 {
-	BitcoinExchange btc;
-
 	if (argc != 2)
 	{
-		std::cerr << "Error: Single file argument needed." << std::endl;
+		std::cerr << "Error: Single operation argument needed." << std::endl;
 		return (1);
 	}
-	else if (btc.loadFiles(CSV, argv[1]))
-	{
-		std::cerr << "Could not open file." << std::endl;
-		return (1);
-	}
-	btc.mapData();
-	btc.execute();
+	RPN::calculate(argv[1]);
 	return (0);
 }

@@ -11,8 +11,65 @@
 /* ************************************************************************** */
 
 #include "RPN.hpp"
+#include <cctype>
 
-RPN::RPN() {}
-RPN::RPN(RPN& orig) { (void)orig; }
-RPN::~RPN() {}
-RPN&	RPN::operator=(const RPN& orig) { (void)orig; return (*this); }
+bool RPN::calculate(std::string line)
+{
+	std::stack<double>	operands;
+	std::string			operators = "+-*/";
+	char				element;
+	double				oper1;
+	double				oper2;
+
+	while (line != "")
+	{
+		element = line[0];
+		line.erase(0, 1);
+		if (element >= '0' && element <= '9')
+			operands.push(element - '0');
+		else if (isspace(element))
+			continue;
+		else if (operators.find(element) != std::string::npos)
+		{
+			if (operands.size() < 2)
+			{
+				std::cerr << "Error: Operation lacking enough operands\n";
+				return (false);
+			}
+			oper1 = operands.top();
+			operands.pop();
+			oper2 = operands.top();
+			operands.pop();
+			switch (element)
+			{
+				case '+':
+					operands.push(oper2 + oper1);
+					break;
+				case '-':
+					operands.push(oper2 - oper1);
+					break;
+				case '*':
+					operands.push(oper2 * oper1);
+					break;
+				case '/':
+					operands.push(oper2 / oper1);
+					break;
+				default:
+					std::cerr << "Error\n";
+					return (false);
+			}
+		}
+		else
+		{
+			std::cerr << "Error: Wrong element\n";
+			return (false);
+		}
+	}
+	if (operands.size() == 1)
+	{
+		std::cout << operands.top() << std::endl;
+		return (true);
+	}
+	std::cerr << "Error: Operation with too many operands\n";
+	return (false);
+}

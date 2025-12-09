@@ -1,28 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   RPN.hpp                                            :+:      :+:    :+:   */
+/*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samartin <samartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samartin <samartin@student.42.fr>          #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/05 14:02:14 by samartin          #+#    #+#             */
-/*   Updated: 2025/12/06 12:05:20 by samartin         ###   ########.fr       */
+/*   Created: 2025-12-09 17:46:25 by samartin          #+#    #+#             */
+/*   Updated: 2025-12-09 17:46:25 by samartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RPN_HPP
 # define RPN_HPP
-# include <iostream>
-# include <stack>
 
-class RPN
-{
-	public:
-		static bool calculate(std::string line);
-	private:
-		RPN();
-		RPN(RPN& orig);
-		~RPN();
-		RPN&	operator=(const RPN& orig);
-};
 #endif
