@@ -24,8 +24,10 @@
 # endif
 
 #include <iostream>
+#include <sstream>
 #include <list>
 #include <vector>
 #include <ctime>
+#include <cctype>
 
 #endif
