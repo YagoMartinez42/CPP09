@@ -50,7 +50,7 @@ int main(int argc, char** argv)
 
 	//Get time
 	timeStart = std::clock();
-		
+	
 		//fordjohnson sort list
 
 

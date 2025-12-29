@@ -12,6 +12,25 @@
 
 #ifndef PMERGEME_HPP
 # define PMERGEME_HPP
+# include <vector>
 
+template < typename T = std::vector<unsigned int>>
+class PmergeMe
+{
+	public:
+		static T fJShort(T& collection)
+		{
+			return (collection);
+		}
+		static size_t binarySearch(const T& collection, unsigned int value) const
+		{
+			return (0);
+		}
+	private:
+		PmergeMe();
+		PmergeMe(const PmergeMe& orig);
+		PmergeMe~();
+		PmargeMe& operator=(const PmergeMe& orig);
+};
 
 #endif
