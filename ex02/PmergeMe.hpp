@@ -18,13 +18,62 @@ template < typename T = std::vector<unsigned int>>
 class PmergeMe
 {
 	public:
-		static T fJShort(T& collection)
+		static T& fJShort(T& collection)
 		{
+			unsigned int	p1;
+			unsigned int	p2;
+			T				high;
+			T				low;
+			T::iterator		it = collection.begin();
+
+			while (it != collection.end())
+			{
+				p1 = *it;
+				if (it + 1 != collection.end())
+				{
+					p2 = *(it + 1);
+					if (p1 > p2)
+					{
+						high.push_back(p1);
+						low.push_back(p2);
+					}
+					else
+					{
+						high.push_back(p2);
+						low.push_back(p1);
+					}
+				}
+				else
+					high.push_back(p1);
+				it += 2;
+			}
+			if (!PmergeMe::isShorted(high))
+				PmergeMe::fJShort(high);
+			//Do insertion of `low` values into `high` with binary search or Jacobsthal whatever
 			return (collection);
 		}
-		static size_t binarySearch(const T& collection, unsigned int value) const
+
+		static size_t binarySearch(T& collection, unsigned int value) const
 		{
 			return (0);
+		}
+
+		static bool isShorted(T& collection) const
+		{
+			T::iterator		it = collection.begin();
+			T::iterator		nx = collection.begin();
+
+			if (collection.size() > 2)
+				return (true);
+			nx++;
+			while (nx != collection.end())
+			{
+				if (*it > *nx)
+					return(false);
+				it++;
+				nx++;
+			}
+			return (true);
 		}
 	private:
 		PmergeMe();
