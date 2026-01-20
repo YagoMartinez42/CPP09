@@ -6,7 +6,7 @@
 /*   By: samartin <samartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 17:46:25 by samartin          #+#    #+#             */
-/*   Updated: 2026/01/20 18:14:59 by samartin         ###   ########.fr       */
+/*   Updated: 2026/01/20 18:26:47 by samartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 # define PMERGEME_HPP
 # include <vector>
 
-template < typename T = std::vector<unsigned int>>
+template < typename T = std::vector<unsigned int> >
 class PmergeMe
 {
 	public:
 		static T& fJShort(T& collection)
 		{
-			unsigned int	p1;
-			unsigned int	p2;
-			T				high;
-			T				low;
-			T::iterator		it = collection.begin();
-			T::iterator		nx = collection.begin();
+			unsigned int			p1;
+			unsigned int			p2;
+			T						high;
+			T						low;
+			typename T::iterator	it = collection.begin();
+			typename T::iterator	nx = collection.begin();
 
 			if (collection.size() < 2)
 				return (collection);
@@ -62,15 +62,15 @@ class PmergeMe
 			return (collection);
 		}
 
-		static size_t binarySearch(T& collection, unsigned int value) const
+		static unsigned int binarySearch(T& collection, unsigned int value)
 		{
 			return (0);
 		}
 
-		static bool isShorted(T& collection) const
+		static bool isShorted(T& collection)
 		{
-			T::iterator		it = collection.begin();
-			T::iterator		nx = collection.begin();
+			typename T::iterator	it = collection.begin();
+			typename T::iterator	nx = collection.begin();
 
 			if (collection.size() < 2)
 				return (true);
@@ -87,8 +87,8 @@ class PmergeMe
 	private:
 		PmergeMe();
 		PmergeMe(const PmergeMe& orig);
-		PmergeMe~();
-		PmargeMe& operator=(const PmergeMe& orig);
+		~PmergeMe();
+		PmergeMe& operator=(const PmergeMe& orig);
 };
 
 #endif
