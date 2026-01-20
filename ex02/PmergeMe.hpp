@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samartin <samartin@student.42.fr>          #+#  +:+       +#+        */
+/*   By: samartin <samartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-12-09 17:46:25 by samartin          #+#    #+#             */
-/*   Updated: 2025-12-09 17:46:25 by samartin         ###   ########.fr       */
+/*   Created: 2025/12/09 17:46:25 by samartin          #+#    #+#             */
+/*   Updated: 2026/01/20 18:14:59 by samartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,17 @@ class PmergeMe
 			T				high;
 			T				low;
 			T::iterator		it = collection.begin();
+			T::iterator		nx = collection.begin();
 
+			if (collection.size() < 2)
+				return (collection);
+			nx++;
 			while (it != collection.end())
 			{
 				p1 = *it;
-				if (it + 1 != collection.end())
+				if (nx != collection.end())
 				{
-					p2 = *(it + 1);
+					p2 = *nx;
 					if (p1 > p2)
 					{
 						high.push_back(p1);
@@ -45,11 +49,16 @@ class PmergeMe
 				}
 				else
 					high.push_back(p1);
-				it += 2;
+				it++;
+				nx++;
+				if (it != collection.end())
+					it++;
+				if (nx != collection.end())
+					nx++;
 			}
 			if (!PmergeMe::isShorted(high))
 				PmergeMe::fJShort(high);
-			//Do insertion of `low` values into `high` with binary search or Jacobsthal whatever
+			//Do insertion of `low` values into `high` with binary search or Jacobsthal sequence
 			return (collection);
 		}
 
@@ -63,7 +72,7 @@ class PmergeMe
 			T::iterator		it = collection.begin();
 			T::iterator		nx = collection.begin();
 
-			if (collection.size() > 2)
+			if (collection.size() < 2)
 				return (true);
 			nx++;
 			while (nx != collection.end())
