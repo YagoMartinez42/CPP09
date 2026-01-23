@@ -14,7 +14,7 @@
 # define PMERGEME_HPP
 # include <vector>
 
-template < typename T = std::vector<unsigned int>>
+template < typename T = std::vector<unsigned int> >
 class PmergeMe
 {
 	public:
