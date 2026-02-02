@@ -50,18 +50,15 @@ int main(int argc, char** argv)
 
 	//Get time
 	timeStart = std::clock();
-	
-		//fordjohnson sort list
-
-
-	//Get time end
+	//fordjohnson sort list
+	PmergeMe<std::list<unsigned int> >::fJSort(list2Sort);
 	//Display elapsed time
 	std::cout << "Elapsed time for sorting list: " << (std::clock() - timeStart) / static_cast<double>(CLOCKS_PER_SEC) << "\n";
 
 	//Get time
 	timeStart = std::clock();
 
-		//fordjohnson sort vector
+	PmergeMe<std::vector<unsigned int> >::fJSort(vector2Sort);
 	
 	//Get time end
 	//Display elapsed time

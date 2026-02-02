@@ -18,7 +18,7 @@ template < typename T = std::vector<unsigned int> >
 class PmergeMe
 {
 	public:
-		static T& fJShort(T& collection)
+		static T& fJSort(T& collection)
 		{
 			unsigned int			p1;
 			unsigned int			p2;
@@ -56,18 +56,19 @@ class PmergeMe
 				if (nx != collection.end())
 					nx++;
 			}
-			if (!PmergeMe::isShorted(high))
-				PmergeMe::fJShort(high);
+			if (!PmergeMe::isSorted(high))
+				PmergeMe::fJSort(high);
 			//Do insertion of `low` values into `high` with binary search or Jacobsthal sequence
 			return (collection);
 		}
 
 		static unsigned int binarySearch(T& collection, unsigned int value)
 		{
+
 			return (0);
 		}
 
-		static bool isShorted(T& collection)
+		static bool isSorted(T& collection)
 		{
 			typename T::iterator	it = collection.begin();
 			typename T::iterator	nx = collection.begin();
