@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samartin <samartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samartin <samartin@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 17:46:25 by samartin          #+#    #+#             */
-/*   Updated: 2026/01/20 18:26:47 by samartin         ###   ########.fr       */
+/*   Updated: 2026/02/02 21:52:46 by samartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,54 @@ class PmergeMe
 			return (collection);
 		}
 
-		static unsigned int binarySearch(T& collection, unsigned int value)
+		static typename T::iterator binarySearch(T& collection, unsigned int value, std::random_access_iterator_tag)
 		{
+			unsigned int	lf;
+			unsigned int	rt;
+			unsigned int	md;
 
-			return (0);
+			if (collection.empty())
+				return (collection.end());
+			lf = 0;
+			rt = collection.size() - 1;
+		    while (lf >= rt)
+			{
+				md = lf + ((rt - lf) / 2);
+				if (collection[md] < value)
+					lf = md + 1;
+				else if (collection[md] > value)
+					rt = md - 1;
+				else
+					return (collection.begin() + md);
+			}
+			return (collection.begin() + lf);
+		}
+
+		static typename T::iterator binarySearch(T& collection, unsigned int value, std::bidirectional_iterator_tag)
+		{
+			typename T::iterator	lf = collection.begin();
+			typename T::iterator	rt = collection.end();
+			typename T::iterator	it = lf;
+			unsigned int						count = 0;
+			unsigned int						step = 0;
+
+			if (collection.empty())
+				return (collection.end());
+			count = std::distance(lf, rt);
+    		while (count > 0)
+			{
+        		it = lf;
+        		step = count / 2;
+				std::advance(it, step);
+				if (*it < value)
+				{
+            		lf = ++it;
+            		count -= step + 1;
+        		}
+				else
+            		count = step;
+    		}
+			return (lf);
 		}
 
 		static bool isSorted(T& collection)
