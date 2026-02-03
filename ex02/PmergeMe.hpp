@@ -13,6 +13,7 @@
 #ifndef PMERGEME_HPP
 # define PMERGEME_HPP
 # include <vector>
+# include <iostream>
 
 template < typename T = std::vector<unsigned int> >
 class PmergeMe
@@ -129,6 +130,19 @@ class PmergeMe
 			}
 			return (true);
 		}
+
+		static void printContainer(T& collection)
+		{
+			typename T::iterator	it = collection.begin();
+
+			while (it != collection.end())
+			{
+				std::cout << *it << "\n";
+				++it;
+			}
+			std::cout << std::endl;
+		}
+		
 	private:
 		PmergeMe();
 		PmergeMe(const PmergeMe& orig);
