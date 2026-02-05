@@ -52,24 +52,25 @@ int main(int argc, char** argv)
 	timeStart = std::clock();
 	//fordjohnson sort list
 	PmergeMe<std::list<unsigned int> >::fJSort(list2Sort);
-	//Display elapsed time
+	//Get time end and display elapsed time
 	std::cout << "Elapsed time for sorting list: " << (std::clock() - timeStart) / static_cast<double>(CLOCKS_PER_SEC) << "\n";
-
+	//Display list
+	PmergeMe<std::list<unsigned int> >::printContainer(list2Sort);
 	//Get time
 	timeStart = std::clock();
-
+	//fordjohnson sort vector
 	PmergeMe<std::vector<unsigned int> >::fJSort(vector2Sort);
-	
-	//Get time end
-	//Display elapsed time
+	//Display vector
+	PmergeMe<std::vector<unsigned int> >::printContainer(vector2Sort);
+	//Get time end and display elapsed time
 	std::cout << "Elapsed time for sorting vector: " << (std::clock() - timeStart) / static_cast<double>(CLOCKS_PER_SEC) << "\n";
 
-/* //Visualization
+ //Visualization
 	for (itl = list2Sort.begin(); itl != list2Sort.end(); itl++)
 		std::cout << *itl << " ";
 	std::cout << std::endl;
 	for (itv = vector2Sort.begin(); itv != vector2Sort.end(); itv++)
 		std::cout << *itv << " ";
-	std::cout << std::endl; */
+	std::cout << std::endl;
 	return (0);
 }

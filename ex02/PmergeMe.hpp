@@ -19,7 +19,7 @@ template < typename T = std::vector<unsigned int> >
 class PmergeMe
 {
 	public:
-		static T& fJSort(T& collection)
+		static T fJSort(T& collection)
 		{
 			unsigned int			p1;
 			unsigned int			p2;
@@ -59,8 +59,36 @@ class PmergeMe
 			}
 			if (!PmergeMe::isSorted(high))
 				PmergeMe::fJSort(high);
-			//Do insertion of `low` values into `high` with binary search or Jacobsthal sequence
-			return (collection);
+			while (!low.empty())
+			{
+				it = binarySearch(high, *(low.begin()));
+				high.insert(it, *(low.begin()));
+				low.erase(low.begin());
+			}
+			return (high);
+		}
+
+		static void printContainer(T& collection)
+		{
+			typename T::iterator	it = collection.begin();
+
+			while (it != collection.end())
+			{
+				std::cout << *it << "\n";
+				++it;
+			}
+			std::cout << std::endl;
+		}
+		
+	private:
+		PmergeMe();
+		PmergeMe(const PmergeMe& orig);
+		~PmergeMe();
+		PmergeMe& operator=(const PmergeMe& orig);
+
+		static typename T::iterator binarySearch(T& collection, unsigned int value)
+		{
+        	return (binarySearch(collection, value, typename std::iterator_traits<typename T::iterator>::iterator_category()));
 		}
 
 		static typename T::iterator binarySearch(T& collection, unsigned int value, std::random_access_iterator_tag)
@@ -130,24 +158,6 @@ class PmergeMe
 			}
 			return (true);
 		}
-
-		static void printContainer(T& collection)
-		{
-			typename T::iterator	it = collection.begin();
-
-			while (it != collection.end())
-			{
-				std::cout << *it << "\n";
-				++it;
-			}
-			std::cout << std::endl;
-		}
-		
-	private:
-		PmergeMe();
-		PmergeMe(const PmergeMe& orig);
-		~PmergeMe();
-		PmergeMe& operator=(const PmergeMe& orig);
 };
 
 #endif
