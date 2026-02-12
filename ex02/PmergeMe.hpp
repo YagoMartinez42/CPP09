@@ -58,23 +58,18 @@ class PmergeMe
 					nx++;
 			}
 			if (!PmergeMe::isSorted(high))
-				PmergeMe::fJSort(high);
-			while (!low.empty())
-			{
-				it = binarySearch(high, *(low.begin()));
-				high.insert(it, *(low.begin()));
-				low.erase(low.begin());
-			}
+				high = PmergeMe::fJSort(high);
+			fJInsertion(low, high);
 			return (high);
 		}
 
-		static void printContainer(T& collection)
+		static void printContainer(const T& collection)
 		{
-			typename T::iterator	it = collection.begin();
+			typename T::const_iterator	it = collection.begin();
 
 			while (it != collection.end())
 			{
-				std::cout << *it << "\n";
+				std::cout << *it << " ";
 				++it;
 			}
 			std::cout << std::endl;
@@ -93,15 +88,15 @@ class PmergeMe
 
 		static typename T::iterator binarySearch(T& collection, unsigned int value, std::random_access_iterator_tag)
 		{
-			unsigned int	lf;
-			unsigned int	rt;
-			unsigned int	md;
+			int	lf;
+			int	rt;
+			int	md;
 
 			if (collection.empty())
 				return (collection.end());
 			lf = 0;
 			rt = collection.size() - 1;
-		    while (lf >= rt)
+		    while (lf <= rt)
 			{
 				md = lf + ((rt - lf) / 2);
 				if (collection[md] < value)
@@ -119,8 +114,8 @@ class PmergeMe
 			typename T::iterator	lf = collection.begin();
 			typename T::iterator	rt = collection.end();
 			typename T::iterator	it = lf;
-			unsigned int						count = 0;
-			unsigned int						step = 0;
+			unsigned int			count = 0;
+			unsigned int			step = 0;
 
 			if (collection.empty())
 				return (collection.end());
@@ -141,6 +136,21 @@ class PmergeMe
 			return (lf);
 		}
 
+		static unsigned int min(unsigned int a, unsigned int b)
+		{
+			if (a < b)
+				return (a);
+			return(b);
+		}
+
+		static unsigned int jacobsthal(unsigned int n)
+		{
+			int sign = 1;
+			if (n & 1)
+				sign = -1;
+			return (((1 << n) - sign) / 3);
+		}
+
 		static bool isSorted(T& collection)
 		{
 			typename T::iterator	it = collection.begin();
@@ -157,6 +167,37 @@ class PmergeMe
 				nx++;
 			}
 			return (true);
+		}
+
+		static void fJInsertion(T& low, T& high)
+		{
+			unsigned int			jIdx = 2;
+			unsigned int			j1 = 0;
+			unsigned int			j2;
+			unsigned int			inserted = 0;
+			unsigned int			limit;
+			unsigned int 			pos;
+			typename T::iterator	lowIt;
+			typename T::iterator	highIt;
+
+			while (inserted < low.size())
+			{
+				j2 = jacobsthal(jIdx);
+				limit = min(j2, low.size());
+				
+				for (pos = limit; pos > j1 && inserted < low.size(); pos--)
+				{
+					lowIt = low.begin();
+					std::advance(lowIt, pos - 1);
+					
+					highIt = binarySearch(high, *lowIt);
+					high.insert(highIt, *lowIt);
+					inserted++;
+				}
+				
+				j1 = j2;
+				jIdx++;
+			}
 		}
 };
 

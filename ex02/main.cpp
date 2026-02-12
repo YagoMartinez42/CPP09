@@ -51,26 +51,18 @@ int main(int argc, char** argv)
 	//Get time
 	timeStart = std::clock();
 	//fordjohnson sort list
-	PmergeMe<std::list<unsigned int> >::fJSort(list2Sort);
+	list2Sort = PmergeMe<std::list<unsigned int> >::fJSort(list2Sort);
 	//Get time end and display elapsed time
-	std::cout << "Elapsed time for sorting list: " << (std::clock() - timeStart) / static_cast<double>(CLOCKS_PER_SEC) << "\n";
+	std::cout << "Elapsed time for sorting list: " << (std::clock() - timeStart) << " microseconds\n";
 	//Display list
 	PmergeMe<std::list<unsigned int> >::printContainer(list2Sort);
 	//Get time
 	timeStart = std::clock();
 	//fordjohnson sort vector
-	PmergeMe<std::vector<unsigned int> >::fJSort(vector2Sort);
-	//Display vector
-	PmergeMe<std::vector<unsigned int> >::printContainer(vector2Sort);
+	vector2Sort = PmergeMe<std::vector<unsigned int> >::fJSort(vector2Sort);
 	//Get time end and display elapsed time
-	std::cout << "Elapsed time for sorting vector: " << (std::clock() - timeStart) / static_cast<double>(CLOCKS_PER_SEC) << "\n";
-
- //Visualization
-	for (itl = list2Sort.begin(); itl != list2Sort.end(); itl++)
-		std::cout << *itl << " ";
-	std::cout << std::endl;
-	for (itv = vector2Sort.begin(); itv != vector2Sort.end(); itv++)
-		std::cout << *itv << " ";
-	std::cout << std::endl;
+	std::cout << "Elapsed time for sorting vector: " << (std::clock() - timeStart) << " microseconds\n";
+	//Display vector / (CLOCKS_PER_SEC / 1000000)
+	PmergeMe<std::vector<unsigned int> >::printContainer(vector2Sort);
 	return (0);
 }
