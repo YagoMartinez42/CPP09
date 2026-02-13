@@ -22,6 +22,7 @@ int main(int argc, char** argv)
 	std::clock_t						timeStart;
 	unsigned int						num;
 
+// REHACER, TIENE QUE VALER CON MÚLTIPLES ARGUMENTOS
 	//Check args
 	if (argc != 2)
 	{
@@ -48,6 +49,7 @@ int main(int argc, char** argv)
 			argnums.ignore();
 	}
 
+//REHACER, TIENE QUE ENCAJAR CON EL FORMATO DE 4 LÍNEAS EXACTO DEL SUBJECT
 	//Get time
 	timeStart = std::clock();
 	//fordjohnson sort list

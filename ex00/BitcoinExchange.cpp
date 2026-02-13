@@ -39,7 +39,7 @@ void BitcoinExchange::mapData()
 	{
 		if (line == "\n" || line == "\r\n")
 			continue;
-		if (this->validateLine(line, "0000-00-00,"))
+		if (this->validateDataLine(line))
 		{
 			iss.clear();
 			iss.str(line.substr(11));
@@ -62,7 +62,7 @@ void BitcoinExchange::execute()
 	{
 		if (line == "\n" || line == "\r\n")
 			continue;
-		if (this->validateLine(line, "0000-00-00 | "))
+		if (this->validateInputLine(line))
 		{
 			date = line.substr(0,10);
 			iss.clear();
@@ -97,9 +97,10 @@ void BitcoinExchange::showData() const
 	aFile.close();
 }
 
-bool BitcoinExchange::validateLine(const std::string line, const std::string pattern) const
+bool BitcoinExchange::validateDataLine(const std::string line) const
 {
 	std::istringstream	iss;
+	std::string			pattern = "0000-00-00,";
 	double				d;
 	size_t			 	i;
 
@@ -148,25 +149,79 @@ bool BitcoinExchange::validateLine(const std::string line, const std::string pat
 	return (false);
 }
 
+bool BitcoinExchange::validateInputLine(const std::string line) const
+{
+	std::istringstream	iss;
+	std::string			pattern = "0000-00-00 | ";
+	double				d;
+	size_t			 	i;
+
+	for (i = 0; i < line.length() && i < pattern.length(); i++)
+	{
+		if (pattern[i] != '0')
+		{
+			if (pattern[i] != line[i])
+			{
+				std::cerr << "Syntax error in line: " << line << "\n";
+				return (false);
+			}
+		}
+		else if (!std::isdigit(line[i]))
+		{
+			std::cerr << "Syntax error in line: " << line << "\n";
+			return (false);
+		}
+	}
+	if (!this->validateDate(line.substr(0,10)))
+	{
+		std::cerr << "Error. Not a valid date: " << line << "\n";
+		return (false);
+	}
+	iss.clear();
+	iss.str(line.substr(i));
+	if (!(iss >> d))
+	{
+		std::cerr << "Error. Not a numeric value: " << line << "\n";
+		return (false);
+	}
+	if (d > 1000)
+	{
+		std::cerr << "Error. Value too large: " << line << "\n";
+		return (false);
+	}
+	else if (d < 0)
+	{
+		std::cerr << "Error. Value is not a positive number: " << line << "\n";
+		return (false);
+	}
+	else if (iss.eof() && d <= 1000)
+		return (true);
+	else
+		std::cerr << "Unhandled Error: " << line << "\n";
+	return (false);
+}
+
 bool BitcoinExchange::validateDate(std::string date) const
 {
 	std::istringstream	iss;
-	int					ymd;
+	int					y;
+	int					m;
+	int					d;
 
 	iss.clear();
 	iss.str(date.substr(0, 4));
-	iss >> ymd;
-	if (ymd < 1900 || ymd > 3000)
+	iss >> y;
+	if (y < 1900 || y > 3000)
 		return (false);
 	iss.clear();
 	iss.str(date.substr(5, 2));
-	iss >> ymd;
-	if (ymd < 1 || ymd > 12)
+	iss >> m;
+	if (m < 1 || m > 12)
 		return (false);
 	iss.clear();
 	iss.str(date.substr(8, 2));
-	iss >> ymd;
-	if (ymd < 1 || ymd > 31)
+	iss >> d;
+	if (d < 1 || d > 31 || (d > 28 && m == 2 && (y % 4 != 0)) || (d > 29 && m == 2 && (y % 4 == 0)) || (d > 30 && (m == 4 || m == 6 || m == 9 || m == 11)))
 		return (false);
 	return (true);
 }

@@ -29,7 +29,8 @@ class BitcoinExchange
 	private:
 		BitcoinExchange(BitcoinExchange& orig);
 		BitcoinExchange&	operator=(const BitcoinExchange& orig);
-		bool				validateLine(const std::string line, const std::string pattern) const;
+		bool				validateDataLine(const std::string line) const;
+		bool				validateInputLine(const std::string line) const;
 		bool				validateDate(const std::string line) const;
 		void				closeFiles();
 		std::ifstream					_csvDataFile;
