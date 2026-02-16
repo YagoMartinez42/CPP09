@@ -19,26 +19,31 @@ int main(int argc, char** argv)
 	std::list<unsigned int>::iterator	itl;
 	std::vector<unsigned int>			vector2Sort;
 	std::vector<unsigned int>::iterator	itv;
+	std::string							argStr;
 	std::clock_t						timeStart;
 	unsigned int						num;
 
-// REHACER, TIENE QUE VALER CON MÚLTIPLES ARGUMENTOS
 	//Check args
-	if (argc != 2)
+	if (argc < 2)
 	{
-		std::cerr << "Error: Single sequence argument needed." << std::endl;
+		std::cerr << "Error: Natural number sequence argument(s) needed." << std::endl;
 		return (1);
 	}
-	for (int i = 0; argv[1][i] != '\0'; i++)
+	//Turn possible multiple args into one string
+	for (int i = 1; argv[i] != NULL; i++)
 	{
-		if (!std::isspace(argv[1][i]) && !std::isdigit(argv[1][i]) && argv[1][i] != ',')
+		for (int j = 0; argv[i][j] != '\0'; j++)
 		{
-		std::cerr << "Error: Use only positive numbers in the sequence." << std::endl;
-		return (1);	
+			if (!std::isspace(argv[i][j]) && !std::isdigit(argv[i][j]) && argv[i][j] != ',' && argv[i][j] != '+')
+			{
+			std::cerr << "Error: Use only positive numbers in the sequence." << std::endl;
+			return (1);	
+			}
 		}
+		argStr += std::string(argv[i]) + " ";
 	}
 
-	std::stringstream argnums(argv[1]);
+	std::stringstream argnums(argStr);
 
 	//Dump to list and vector
 	while (argnums >> num)
@@ -48,23 +53,26 @@ int main(int argc, char** argv)
 		while (argnums.peek() == ',' || std::isspace(argnums.peek()))
 			argnums.ignore();
 	}
-
-//REHACER, TIENE QUE ENCAJAR CON EL FORMATO DE 4 LÍNEAS EXACTO DEL SUBJECT
+	//Display the sequence just entered
+	std::cout << "Number sequence before sorting: ";
+	PmergeMe<std::list<unsigned int> >::printContainer(list2Sort);
 	//Get time
 	timeStart = std::clock();
 	//fordjohnson sort list
 	list2Sort = PmergeMe<std::list<unsigned int> >::fJSort(list2Sort);
-	//Get time end and display elapsed time
-	std::cout << "Elapsed time for sorting list: " << (std::clock() - timeStart) << " microseconds\n";
-	//Display list
+	//Display sorted list
+	std::cout << "Number sequence after sorting: ";
 	PmergeMe<std::list<unsigned int> >::printContainer(list2Sort);
+	std::cout << std::endl;
+	//Get time end and display elapsed time for list
+	std::cout << "Elapsed time for sorting list: " << (std::clock() - timeStart) << " microseconds\n";
 	//Get time
 	timeStart = std::clock();
 	//fordjohnson sort vector
 	vector2Sort = PmergeMe<std::vector<unsigned int> >::fJSort(vector2Sort);
-	//Get time end and display elapsed time
+	//Sorted vector is not asked to be displayed, third and fourth lines are explicitly requested to be the times
+	//Get time end and display elapsed time for vector
 	std::cout << "Elapsed time for sorting vector: " << (std::clock() - timeStart) << " microseconds\n";
-	//Display vector / (CLOCKS_PER_SEC / 1000000)
-	PmergeMe<std::vector<unsigned int> >::printContainer(vector2Sort);
+	std::cout << std::endl;
 	return (0);
 }
